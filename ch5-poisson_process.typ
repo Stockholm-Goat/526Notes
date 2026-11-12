@@ -205,5 +205,7 @@ Poisson Process can also be identified by
   $
     S_t = sum_j^N_t Y_j
   $
-  where each
+  where each $S_t$ is a Poisson process.
 ]
+
+
