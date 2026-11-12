@@ -65,7 +65,7 @@ We will only consider Markov chains with $sum_(j!=i) q(i,j)<oo$
 #example()[
   Customers arrive in a bank according to Poisson with rate $lambda$. Bank has $s$ sellers. Each service time is iid $"Exp"(mu)$. $X_t$ is number of customer in bank at time $t$.
 
-  Note $q(n,n+1)=lambda$, and $q(n,n-1)=min(n,s) mu$.
+  Note $q(n,n+1)=lambda$, and $q(n,n-1)=min(n, s) mu$.
 ]
 
 
@@ -76,7 +76,7 @@ We will only consider Markov chains with $sum_(j!=i) q(i,j)<oo$
 ]
 
 #theorem(title: [Uniformization])[
-    Let $sup_i lambda_i <= Lambda < oo$
+  Let $sup_i lambda_i <= Lambda < oo$
 ]
 
 #definition(title: [Regular Markov Chain])[
@@ -91,14 +91,43 @@ We will only consider Markov chains with $sum_(j!=i) q(i,j)<oo$
 
 #theorem()[
   $
-    p_(t+s) (i,j) = sum_(k in SS) p_t (i,k) p_t (k, j) 
+    p_(t+s) (i,j) = sum_(k in SS) p_t (i,k) p_t (k, j)
   $
 ]
 #proof()[
-  $PP(X_(s+t) = j | X_0 = i) = sum_k PP(X_(s+t) = j | X_0 = i, X_s = k )PP(X_s = k | X_0 = i)$
+  $PP(X_(s+t) = j | X_0 = i) = sum_k PP(X_(s+t) = j | X_0 = i, X_s = k)PP(X_s = k | X_0 = i)$
 ]
 
-Note
+With this equation, we can derive the following.
+#theorem(title: [Kolmogorov Forward Equation])[
+  Let $X_t$ be a finite state space CTMC. Let $Q$ be defined as
+  $
+    Q_(i j ) = q(i, j)bb(1)_(i != j) -lambda_i bb(1)_(i=j)
+  $
+  where $lambda_i=sum_(i!=j) q(i,j)$. Then
+  $
+    p_t^prime = Q p_t
+  $
+]
+#proof()[
+  Consider difference fraction
+  $
+    & #h(1em) 1/h (p_(t+h) (i,j) - p_t (i,j)) \
+    & = 1/h sum_k p_h (i,k)p_t (k,j) - 1/h p_t (i,j) \
+    & = 1/h p_h (i,i) p_t (i,j) + sum_(i != k)( p_h (i,k) - p_0 (i, k) ) / h p_t (k,j) -1/h p_t (i,j) \
+    & = sum_(i != k)( p_h (i,k) - p_0 (i, k) ) / h p_t (k,j) - 1/h p_t (i,j) (1-p_h (i,i)) \
+    & = sum_(i!=k) (p_h (i,k) - p_0 (i,k)) / h p_t (k,j) - p_t (i,j) sum_(i!=k) (p_h (i,k) - p_0(i,k))/h \
+    & -> sum_(i!=k) q(i,k) p_t (k,j) -p_t (i, j) sum_(i!=k) q(i,k) \
+    & = q(i,i)p_t (i, j) - sum_k q(i,k) p_t (k,j) - p_t (i,j) lambda_i
+  $
+  We define $q(i,i):= -lambda_i$, then we have
+  $
+    p_t^prime = Q p_t.
+  $
+  as required.
+]
+
+
 
 
 
