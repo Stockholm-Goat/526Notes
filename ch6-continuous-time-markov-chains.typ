@@ -89,6 +89,17 @@ We will only consider Markov chains with $sum_(j!=i) q(i,j)<oo$
 
 = Generators, Kolmogorov Equations
 
+#theorem()[
+  $
+    p_(t+s) (i,j) = sum_(k in SS) p_t (i,k) p_t (k, j) 
+  $
+]
+#proof()[
+  $PP(X_(s+t) = j | X_0 = i) = sum_k PP(X_(s+t) = j | X_0 = i, X_s = k )PP(X_s = k | X_0 = i)$
+]
+
+Note
+
 
 
 
